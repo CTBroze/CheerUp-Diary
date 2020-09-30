@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "466046777933",
+    "firebase_url": "https://cheerupdiary.firebaseio.com",
+    "project_id": "cheerupdiary",
+    "storage_bucket": "cheerupdiary.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466046777933:android:787041269cba3dc6837a04",
+        "android_client_info": {
+          "package_name": "com.ap.cheerupdiary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466046777933-dlfmcmd14bgqlra47ta5sdfgrm0tkpft.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ap.cheerupdiary",
+            "certificate_hash": "6e47bf1c110cf62e70aca2a45eaa67088dafc28f"
+          }
+        },
+        {
+          "client_id": "466046777933-gtc6t2faldl0p61716v5l3l5j6647dmg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFmShiMgGqD-WdwUAKhq2MlSfXIbobRjo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466046777933-gtc6t2faldl0p61716v5l3l5j6647dmg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
