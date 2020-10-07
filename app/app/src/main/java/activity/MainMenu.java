@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.ap.cheerupdiary.CalendarFragment;
 import com.ap.cheerupdiary.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import fragment.CalendarFragment;
 import fragment.ScheduleListFragment;
 import fragment.SettingFragment;
 
@@ -27,7 +27,7 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         // make fragment
-        calendarFrag = new CalendarFragment();
+        calendarFrag = new fragment.CalendarFragment();
         scheduleListFrag = new ScheduleListFragment();
         settingFrag = new SettingFragment();
 
