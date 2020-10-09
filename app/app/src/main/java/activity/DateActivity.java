@@ -41,6 +41,8 @@ public class DateActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast myToast = Toast.makeText(getApplication(),"저장 완료!", Toast.LENGTH_SHORT);
+                myToast.show();
                 finish();
             }
         });

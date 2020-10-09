@@ -36,6 +36,9 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
+    // for calendar
+    implementation 'com.prolificinteractive:material-calendarview:1.4.3'
+
     // navigator
     implementation 'com.android.support:design:29.0.0'
 

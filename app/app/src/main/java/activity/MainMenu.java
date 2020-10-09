@@ -2,7 +2,10 @@ package activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ap.cheerupdiary.R;
@@ -20,6 +23,27 @@ public class MainMenu extends AppCompatActivity {
     ScheduleListFragment scheduleListFrag;
     SettingFragment settingFrag;
 
+    // 메뉴 추가
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    // 액션바 메뉴 클릭시 이벤트 처리
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.addDateBtn){
+            Intent intent = new Intent( this, DateActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
