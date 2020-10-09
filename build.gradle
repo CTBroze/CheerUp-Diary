@@ -25,7 +25,8 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok' //lombok
 	annotationProcessor 'org.projectlombok:lombok' //lombok
 	implementation 'com.google.firebase:firebase-admin:6.8.1' //firebase
-	implementation 'com.github.bane73:firebase4j:eb408c11a6'
+	implementation 'com.github.bane73:firebase4j:eb408c11a6' //firebase
+	implementation("com.squareup.okhttp3:okhttp:4.9.0")
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

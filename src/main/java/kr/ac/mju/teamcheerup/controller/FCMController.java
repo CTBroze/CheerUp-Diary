@@ -26,4 +26,9 @@ public class FCMController {
 
         }
     }
+
+    @GetMapping("/test")
+    public void test(){
+        firebaseService.getAllUser();
+    }
 }

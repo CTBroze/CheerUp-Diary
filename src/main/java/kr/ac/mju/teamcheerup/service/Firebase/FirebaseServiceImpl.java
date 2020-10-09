@@ -1,5 +1,6 @@
 package kr.ac.mju.teamcheerup.service.Firebase;
 
+import com.google.firebase.auth.FirebaseAuth;
 import jdk.dynalink.NamedOperation;
 import kr.ac.mju.teamcheerup.modle.Event;
 import kr.ac.mju.teamcheerup.modle.Message;
@@ -9,6 +10,7 @@ import net.thegreshams.firebase4j.service.Firebase;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -41,7 +43,6 @@ public class FirebaseServiceImpl implements FirebaseService{
         catch (UnsupportedEncodingException e){
             System.out.println(e.getMessage());
         }
-
         return msg;
     }
 
@@ -56,6 +57,20 @@ public class FirebaseServiceImpl implements FirebaseService{
 
     @Override
     public List<String> getAllUser() {
-        return null;
+        List<String> userList = null;
+        try {
+            Firebase firebase = new Firebase("https://cheerupdiary.firebaseio.com/UID/");
+            FirebaseResponse response = firebase.get();
+            if(response.getSuccess()){
+                userList = Arrays.asList((response.getRawBody().toString()).replace("[","").replace("]","").split(","));
+            }
+        }
+        catch (FirebaseException e){
+            System.out.println(e.getMessage());
+        }
+        catch (UnsupportedEncodingException e){
+            System.out.println(e.getMessage());
+        }
+        return userList;
     }
 }
