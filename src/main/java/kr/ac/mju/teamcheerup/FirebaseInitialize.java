@@ -1,4 +1,4 @@
-package kr.ac.mju.teamcheerup.service.Firebase;
+package kr.ac.mju.teamcheerup;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -16,15 +16,14 @@ import java.util.List;
 @Service
 public class FirebaseInitialize {
     //serviceAccount파일 경로(.json)
-    final private String  firebaseConfigPath = "./cheerupdiary-firebase-adminsdk-qyjmj-29a5cb9012.json";
+    final private String  firebaseConfigPath = "firebase/cheerupdiary-firebase-adminsdk-qyjmj-b81d8884af.json";
 
     //데이터베이스 접근 인증
     @PostConstruct
     public void initialize(){
         try{
-            FileInputStream serviceAccount = new FileInputStream(firebaseConfigPath);
             FirebaseOptions options = FirebaseOptions.builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setCredentials(GoogleCredentials.fromStream(new ClassPathResource(firebaseConfigPath).getInputStream()))
                     .setDatabaseUrl("https://cheerupdiary.firebaseio.com/")
                     .build();
             FirebaseApp.initializeApp(options);

@@ -6,7 +6,7 @@ import kr.ac.mju.teamcheerup.modle.Message;
 import java.util.List;
 
 public interface FirebaseService {
-    Message getMesseage();
+    Message getMesseage(int event);
     void insertMessage(Message msg);
     //key값에 해당하는 유저의 이벤트에서 이벤트를 찾아서 전달함(없을경우 null전달)
     Event getEvent(String key);

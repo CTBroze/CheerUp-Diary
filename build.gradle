@@ -16,6 +16,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -24,6 +25,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok' //lombok
 	annotationProcessor 'org.projectlombok:lombok' //lombok
 	implementation 'com.google.firebase:firebase-admin:6.8.1' //firebase
+	implementation 'com.github.bane73:firebase4j:eb408c11a6'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
