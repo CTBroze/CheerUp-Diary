@@ -63,11 +63,11 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // 로그인 한번 해놓았으면 자동 로그인
-//        if (mAuth.getCurrentUser() != null) {
-//            Intent intent = new Intent(getApplication(), MainMenu.class);
-//            startActivity(intent);
-//            finish();
-//        }
+        if (mAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(getApplication(), MainMenu.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void signIn() {
