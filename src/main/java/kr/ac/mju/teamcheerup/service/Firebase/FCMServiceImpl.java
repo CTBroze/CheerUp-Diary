@@ -6,7 +6,6 @@ import kr.ac.mju.teamcheerup.modle.FCMMessage;
 import kr.ac.mju.teamcheerup.modle.Message;
 import lombok.RequiredArgsConstructor;
 import okhttp3.*;
-import org.codehaus.jackson.JsonProcessingException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -51,7 +50,7 @@ public class FCMServiceImpl implements FCMService{
         System.out.println(response.body().string());
     }
 
-    private String makeMessage(String targetToken, Message message) throws JsonProcessingException, com.fasterxml.jackson.core.JsonProcessingException { //Json 변환과정에서 예외가 발생가능
+    private String makeMessage(String targetToken, Message message) throws com.fasterxml.jackson.core.JsonProcessingException { //Json 변환과정에서 예외가 발생가능
         //FCM에서 사용하는 메시지 형태로 전환
         FCMMessage fcmMessage = FCMMessage.builder()
                 .message(Message.builder()

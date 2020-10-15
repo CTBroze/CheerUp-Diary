@@ -5,6 +5,7 @@ import kr.ac.mju.teamcheerup.service.Firebase.FirebaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class FCMController {
     FirebaseService firebaseService;
 
     //요청받는 이벤트의 종류와 보낼 사용자의 토큰값을 받아온다.
-    @GetMapping("/send/{token}/{event}")
+    @PostMapping("/send/{token}/{event}")
     public void sendMessage(@PathVariable String token,@PathVariable int event){
         try {
             //메시지 전송 시도
@@ -34,6 +35,6 @@ public class FCMController {
     //Service테스트용
     @GetMapping("/test")
     public void test(){
-        firebaseService.getAllUser();
+        firebaseService.getEvent("123456789");
     }
 }

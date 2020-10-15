@@ -8,6 +8,8 @@ import net.thegreshams.firebase4j.service.Firebase;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -58,18 +60,27 @@ public class FirebaseServiceImpl implements FirebaseService{
     @Override
     public List<Event> getEvent(String key) {
         //이벤트 목록을 배열로 반환
-        List<Event> events = null;
+        List<Event> events = new ArrayList<>();
         try {
-            Firebase firebase = new Firebase("https://cheerupdiary.firebaseio.com/"+key+"/");
+            Firebase firebase = new Firebase("https://cheerupdiary.firebaseio.com/Event/"+key+"/");
             int index = 0;
             FirebaseResponse response = firebase.get(index+"/");
-            while(response.getRawBody() != null){
-                //Event 생성
-                Event event = null;
+            while(!(response.getRawBody().equals("null"))){
                 //데이터 삽입과정
-
+                String[] temp = (response.getBody().toString()).replace("{","").replace("}","").split(",");
                 //Array에 저장
-                events.add(event);
+                events.add(Event.builder()
+                        .event((temp[0].split("="))[1])
+                        .dateTime(LocalDateTime.of(Integer.parseInt(((temp[1].split("="))[1]).split(" ")[0]), //year
+                                Integer.parseInt(((temp[1].split("="))[1]).split(" ")[1]), //month
+                                Integer.parseInt(((temp[1].split("="))[1]).split(" ")[2]), //day
+                                Integer.parseInt(((temp[1].split("="))[1]).split(" ")[3]), //hour
+                                Integer.parseInt(((temp[1].split("="))[1]).split(" ")[4]), //min
+                                0, //sec
+                                0)) //nanosec
+                        .data((temp[2].split("="))[1])
+                        .title((temp[3].split("="))[1])
+                        .build());
                 index++;
                 response = firebase.get(index+"/");
             }
@@ -79,6 +90,9 @@ public class FirebaseServiceImpl implements FirebaseService{
         }
         catch (UnsupportedEncodingException e){ //UnsupportedEncodingException 처리(Firebase.get()에서 필요)
 
+            System.out.println(e.getMessage());
+        }
+        catch (NumberFormatException e){
             System.out.println(e.getMessage());
         }
 
