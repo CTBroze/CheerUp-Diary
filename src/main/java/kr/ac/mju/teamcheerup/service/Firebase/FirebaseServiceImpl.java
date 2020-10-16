@@ -3,21 +3,19 @@ package kr.ac.mju.teamcheerup.service.Firebase;
 import kr.ac.mju.teamcheerup.modle.Event;
 import kr.ac.mju.teamcheerup.modle.Message;
 import net.thegreshams.firebase4j.error.FirebaseException;
+import net.thegreshams.firebase4j.error.JacksonUtilityException;
 import net.thegreshams.firebase4j.model.FirebaseResponse;
 import net.thegreshams.firebase4j.service.Firebase;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class FirebaseServiceImpl implements FirebaseService{
     //총 메시지 개수
-    final int messageCount = 1;
+    private int messageCount = 3;
 
     @Override
     public Message getMesseage(int event) {
@@ -49,10 +47,10 @@ public class FirebaseServiceImpl implements FirebaseService{
             }
         }
         catch (FirebaseException e){ //FirebaseException 처리(Firebase 생성자에서 필요)
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         catch (UnsupportedEncodingException e){ //UnsupportedEncodingException 처리(Firebase.get()에서 필요)
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return msg;
     }
@@ -62,15 +60,19 @@ public class FirebaseServiceImpl implements FirebaseService{
         //이벤트 목록을 배열로 반환
         List<Event> events = new ArrayList<>();
         try {
+            //이벤트를 가져올 유저를 baseUrl지정
             Firebase firebase = new Firebase("https://cheerupdiary.firebaseio.com/Event/"+key+"/");
+            //이벤트ID코드순으로 반복 GET
             int index = 0;
             FirebaseResponse response = firebase.get(index+"/");
+            //데이터가 없다면 rawBody가 문자열null이 반환됨
             while(!(response.getRawBody().equals("null"))){
                 //데이터 삽입과정
                 String[] temp = (response.getBody().toString()).replace("{","").replace("}","").split(",");
                 //Array에 저장
                 events.add(Event.builder()
                         .event((temp[0].split("="))[1])
+                        //LocalDateTime.of와 Integer.parseInt를 통해 String > int > LocalDateTime으로 변환하여 저장
                         .dateTime(LocalDateTime.of(Integer.parseInt(((temp[1].split("="))[1]).split(" ")[0]), //year
                                 Integer.parseInt(((temp[1].split("="))[1]).split(" ")[1]), //month
                                 Integer.parseInt(((temp[1].split("="))[1]).split(" ")[2]), //day
@@ -86,14 +88,14 @@ public class FirebaseServiceImpl implements FirebaseService{
             }
         }
         catch(FirebaseException e){ //FirebaseException 처리(Firebase 생성자에서 필요)
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         catch (UnsupportedEncodingException e){ //UnsupportedEncodingException 처리(Firebase.get()에서 필요)
 
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         catch (NumberFormatException e){
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
         return events;
@@ -113,16 +115,31 @@ public class FirebaseServiceImpl implements FirebaseService{
             }
         }
         catch (FirebaseException e){ //FirebaseException 처리(Firebase 생성자에서 필요)
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         catch (UnsupportedEncodingException e){ //UnsupportedEncodingException 처리(Firebase.get()에서 필요)
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return userList;
     }
 
     @Override
     public void insertMessage(Message msg) {
-
+        try {
+            Firebase firebase = new Firebase("https://cheerupdiary.firebaseio.com/Message/Message"+messageCount);
+            HashMap<String, Object> dataMap = new LinkedHashMap<String, Object>();
+            dataMap.put("제목",msg.getNotification().getTitle());
+            dataMap.put("내용",msg.getNotification().getBody());
+            dataMap.put("이미지",msg.getNotification().getImage());
+            FirebaseResponse response = firebase.put(dataMap);
+            messageCount++;
+        }
+        catch (FirebaseException e){
+            e.printStackTrace();
+        } catch (JacksonUtilityException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }

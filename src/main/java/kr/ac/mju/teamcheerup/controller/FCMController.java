@@ -1,12 +1,10 @@
 package kr.ac.mju.teamcheerup.controller;
 
+import kr.ac.mju.teamcheerup.modle.Message;
 import kr.ac.mju.teamcheerup.service.Firebase.FCMService;
 import kr.ac.mju.teamcheerup.service.Firebase.FirebaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -28,8 +26,22 @@ public class FCMController {
             fcmService.sendMessageTo(token, firebaseService.getMesseage(event));
         }
         catch (IOException e){
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
+    }
+
+    //GetMapping미사용시 해당 메서드가 호출되지 않음
+    @GetMapping("/insert/{title}/{data}")
+    public void insertMessage(@PathVariable String title,@PathVariable String data){
+        //경로를 통해 받아온 제목과 내용을 Message로 변환하여 반환
+        firebaseService.insertMessage(Message.builder()
+                .token(null)
+                .notification(Message.Notification.builder()
+                        .title(title)
+                        .body(data)
+                        .image(null)
+                        .build())
+                .build());
     }
 
     //Service테스트용
