@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(this.getClass().getName(),"로그인 시작");
+                //Log.d(this.getClass().getName(),"로그인 시작");
                 signIn();
             }
         });

@@ -70,10 +70,10 @@ public class MainMenu extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, calendarFrag).commitAllowingStateLoss();
                         return true;
                     }
-                    case R.id.tab2: {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, scheduleListFrag).commitAllowingStateLoss();
-                        return true;
-                    }
+//                    case R.id.tab2: {
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, scheduleListFrag).commitAllowingStateLoss();
+//                        return true;
+//                    }
                     case R.id.tab3: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, settingFrag).commitAllowingStateLoss();
                         return true;

@@ -1,8 +1,10 @@
 package activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,8 +17,11 @@ import android.widget.Toast;
 
 import com.ap.cheerupdiary.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 
@@ -45,6 +50,8 @@ public class DateActivity extends AppCompatActivity {
     EditText desc;
     int type;
 
+    int manyOfData;
+
 
     // 일정 종류
     Spinner kind;
@@ -61,6 +68,7 @@ public class DateActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.btnSave);
         dateBtn = findViewById(R.id.btnDate);
 
+
         SettingSpinner();
 
         title = findViewById(R.id.titleEditText);
@@ -69,12 +77,21 @@ public class DateActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String date = getDate();
-                Toast myToast = Toast.makeText(getApplication(),"저장 완료!", Toast.LENGTH_SHORT);
-                myToast.show();
-                Map<String, ScheduleData> m = new HashMap<>();
-                m.put("data", getData());
-                myRef.child(getDate()).setValue(m);
+                final Map<String, ScheduleData> m = new HashMap<>();
+
+                myRef.child("manyofdata").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        manyOfData = Integer.parseInt(snapshot.getValue().toString()) + 1;
+                        m.put("data", getData());
+                        //Toast.makeText(getApplicationContext(), Integer.toString(manyOfData),Toast.LENGTH_SHORT).show();
+                        myRef.child(Integer.toString(manyOfData)).setValue(m);
+                        myRef.child("manyofdata").setValue(manyOfData);
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
                 finish();
             }
         });
@@ -86,15 +103,15 @@ public class DateActivity extends AppCompatActivity {
             }
         });
     }
-
-    String getDate(){
-        long now = System.currentTimeMillis();
-        Date date = new Date(now);
-        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-        String time = mFormat.format(date);
-        String result = time;
-        return result;
-    }
+//
+//    String getDate(){
+//        long now = System.currentTimeMillis();
+//        Date date = new Date(now);
+//        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+//        String time = mFormat.format(date);
+//        String result = time;
+//        return result;
+//    }
 
     ScheduleData getData(){
         ScheduleData result = new ScheduleData("","","",1);
@@ -106,20 +123,27 @@ public class DateActivity extends AppCompatActivity {
         return result;
     }
 
+    void checkManyOfData(String many){
+        this.manyOfData = Integer.parseInt(many) + 1;
+       // Toast.makeText(getApplicationContext(), many,Toast.LENGTH_SHORT).show();
+    }
+
     // datePicker를 보여주는 함수
     void showDatePicker(View view){
         DialogFragment frag = new DatePickerFragment();
         frag.show(getSupportFragmentManager(),"datePicker");
     }
 
+    @SuppressLint("RestrictedApi")
     public void datePickerResult(int year, int month, int day){
         this.year = Integer.toString(year);
         this.month = Integer.toString(month+1);
         this.day = Integer.toString(day);
 
-        Toast.makeText(this, "date = " + this.month + "/" + this.day,Toast.LENGTH_SHORT).show();
+
     }
 
+    // spinner 타입 종류를 지역변수에 mapping
     void setType(int pos){
         this.type=pos;
     }

@@ -17,6 +17,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.ap.cheerupdiary.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
@@ -34,6 +37,10 @@ public class CalendarFragment extends Fragment {
 
     MaterialCalendarView calendar;
     ListView scheduleList;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    DatabaseReference myRef = database.getReference("UID/"+auth.getUid());
 
 
 
