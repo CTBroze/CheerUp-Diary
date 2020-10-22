@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -23,12 +24,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
 
     // firebase auth
     private FirebaseAuth mAuth = null;
     private GoogleSignInClient mGoogleSignInClient;
+    private FirebaseUser user;
+
+    // Firebase Database
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference mRef = database.getReference("UID/");
 
     private static final int RC_SIGN_IN = 9001;
 
@@ -70,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //UserSignIn
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -78,7 +88,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -112,6 +121,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) { //update ui code here
         if (user != null) {
+            //UserDataInsert
+            mRef.child(user.getUid()).setValue(user.getUid());
             Intent intent = new Intent(this, MainMenu.class);
             startActivity(intent);
             Log.d(this.getClass().getName(),"로그인 성공");
