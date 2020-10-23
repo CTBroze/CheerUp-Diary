@@ -11,13 +11,15 @@ public class ScheduleData {
     public String date;
     public String title;
     public String description;
+    public String time;
     public int scheduleType;
 
-    public ScheduleData(String title, String desc, String date, int type){
+    public ScheduleData(String title, String desc, String date, int type, String time){
         this.title = title;
         this.description = desc;
         this.date = date;
         this.scheduleType = type;
+        this.time = time;
     }
 
 
