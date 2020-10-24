@@ -15,7 +15,8 @@ import java.util.*;
 @Service
 public class FirebaseServiceImpl implements FirebaseService{
     //총 메시지 개수
-    private int messageCount = 3;
+    private int messageCount = 1;
+    final String BASE_URL = "https://cheerupdiary.firebaseio.com/";
 
     @Override
     public Message getMesseage(int event) {
@@ -24,7 +25,7 @@ public class FirebaseServiceImpl implements FirebaseService{
         //이벤트 종류에 따라 메시지를 가져오도록 변경 예정(현재 메시지개수 부족)
         try {
             //Firebase접근을 위한 객체(Firebase4j 이용)
-            Firebase firebase = new Firebase("https://cheerupdiary.firebaseio.com/Message/Message"+(random.nextInt(messageCount+1)));
+            Firebase firebase = new Firebase(BASE_URL +"Message/Message"+(random.nextInt(messageCount+1)));
             //주소에 해당하는 데이터값을 가져온다
             FirebaseResponse response = firebase.get();
             //성공적으로 통신했을경우
@@ -61,30 +62,30 @@ public class FirebaseServiceImpl implements FirebaseService{
         List<Event> events = new ArrayList<>();
         try {
             //이벤트를 가져올 유저를 baseUrl지정
-            Firebase firebase = new Firebase("https://cheerupdiary.firebaseio.com/Event/"+key+"/");
+            Firebase firebase = new Firebase(BASE_URL + "Event/"+key);
             //이벤트ID코드순으로 반복 GET
-            int index = 0;
-            FirebaseResponse response = firebase.get(index+"/");
+            int index = 1;
+            FirebaseResponse response = firebase.get(index+"/data/");
             //데이터가 없다면 rawBody가 문자열null이 반환됨
             while(!(response.getRawBody().equals("null"))){
                 //데이터 삽입과정
                 String[] temp = (response.getBody().toString()).replace("{","").replace("}","").split(",");
                 //Array에 저장
                 events.add(Event.builder()
-                        .event((temp[0].split("="))[1])
+                        .event((temp[2].split("="))[1])
                         //LocalDateTime.of와 Integer.parseInt를 통해 String > int > LocalDateTime으로 변환하여 저장
-                        .dateTime(LocalDateTime.of(Integer.parseInt(((temp[1].split("="))[1]).split(" ")[0]), //year
-                                Integer.parseInt(((temp[1].split("="))[1]).split(" ")[1]), //month
-                                Integer.parseInt(((temp[1].split("="))[1]).split(" ")[2]), //day
-                                Integer.parseInt(((temp[1].split("="))[1]).split(" ")[3]), //hour
-                                Integer.parseInt(((temp[1].split("="))[1]).split(" ")[4]), //min
+                        .dateTime(LocalDateTime.of(Integer.parseInt(((temp[0].split("="))[1]).split("-")[0]), //year
+                                Integer.parseInt(((temp[0].split("="))[1]).split("-")[1]), //month
+                                Integer.parseInt(((temp[0].split("="))[1]).split("-")[2]), //day
+                                Integer.parseInt(((temp[3].split("="))[1]).split(":")[0]), //hour
+                                Integer.parseInt(((temp[3].split("="))[1]).split(":")[1]), //min
                                 0, //sec
                                 0)) //nanosec
-                        .data((temp[2].split("="))[1])
-                        .title((temp[3].split("="))[1])
+                        .data((temp[1].split("="))[1])
+                        .title((temp[4].split("="))[1])
                         .build());
                 index++;
-                response = firebase.get(index+"/");
+                response = firebase.get(index+"/data/");
             }
         }
         catch(FirebaseException e){ //FirebaseException 처리(Firebase 생성자에서 필요)
@@ -103,15 +104,18 @@ public class FirebaseServiceImpl implements FirebaseService{
 
     @Override
     public List<String> getAllUser() {
-        List<String> userList = null;
+        List<String> userList = new ArrayList<>();
         try {
             //UID가 저장된 트리 선택
-            Firebase firebase = new Firebase("https://cheerupdiary.firebaseio.com/UID/");
+            Firebase firebase = new Firebase(BASE_URL + "UID/");
             //전체 목록을 가져옴
             FirebaseResponse response = firebase.get();
             if(response.getSuccess()){
+                String[] temp = response.getBody().toString().replace("{","").replace("}","").replace(" ","").split(",");
                 //가져온 목록을 List로 저장
-                userList = Arrays.asList((response.getRawBody().toString()).replace("[","").replace("]","").split(","));
+                for(int i = 0;i<temp.length;i++){
+                    userList.add(temp[i].split("=")[0]);
+                }
             }
         }
         catch (FirebaseException e){ //FirebaseException 처리(Firebase 생성자에서 필요)
@@ -126,7 +130,7 @@ public class FirebaseServiceImpl implements FirebaseService{
     @Override
     public void insertMessage(Message msg) {
         try {
-            Firebase firebase = new Firebase("https://cheerupdiary.firebaseio.com/Message/Message"+messageCount);
+            Firebase firebase = new Firebase(BASE_URL + "Message/Message"+messageCount);
             HashMap<String, Object> dataMap = new LinkedHashMap<String, Object>();
             dataMap.put("제목",msg.getNotification().getTitle());
             dataMap.put("내용",msg.getNotification().getBody());
@@ -141,5 +145,24 @@ public class FirebaseServiceImpl implements FirebaseService{
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String getFCMToken(String token){
+        try {
+            Firebase firebase = new Firebase(BASE_URL + "FCM/" + token);
+            FirebaseResponse response = firebase.get();
+            if(response.getSuccess()){
+                String fcmToken = response.getRawBody().replace("\"","");
+                return fcmToken;
+            }
+        }
+        catch (FirebaseException e){
+            e.printStackTrace();
+        }
+        catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

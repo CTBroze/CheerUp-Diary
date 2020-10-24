@@ -5,11 +5,13 @@ import kr.ac.mju.teamcheerup.service.Firebase.FCMService;
 import kr.ac.mju.teamcheerup.service.Firebase.FirebaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Component
 public class CheckEvent {
     @Autowired
     FirebaseService firebaseService;

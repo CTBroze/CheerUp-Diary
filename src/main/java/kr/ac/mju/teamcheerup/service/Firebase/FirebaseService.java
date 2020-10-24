@@ -14,5 +14,10 @@ public interface FirebaseService {
 
     //모든 유저의 key값을 list에 담아 전달
     List<String> getAllUser();
+
+    //메시지를 DB에 저장
     void insertMessage(Message msg);
+
+    //FCM토큰값 반환
+    public String getFCMToken(String token);
 }

@@ -1,5 +1,6 @@
 package kr.ac.mju.teamcheerup.controller;
 
+import kr.ac.mju.teamcheerup.CheckEvent;
 import kr.ac.mju.teamcheerup.modle.Message;
 import kr.ac.mju.teamcheerup.service.Firebase.FCMService;
 import kr.ac.mju.teamcheerup.service.Firebase.FirebaseService;
@@ -18,6 +19,9 @@ public class FCMController {
     @Autowired
     FirebaseService firebaseService;
 
+    @Autowired
+    CheckEvent checkEvent;
+
     //요청받는 이벤트의 종류와 보낼 사용자의 토큰값을 받아온다.
     @PostMapping("/send/{token}/{event}")
     public void sendMessage(@PathVariable String token,@PathVariable int event){
@@ -31,7 +35,7 @@ public class FCMController {
     }
 
     //GetMapping미사용시 해당 메서드가 호출되지 않음
-    @GetMapping("/insert/{title}/{data}")
+    @PutMapping("/insert/{title}/{data}")
     public void insertMessage(@PathVariable String title,@PathVariable String data){
         //경로를 통해 받아온 제목과 내용을 Message로 변환하여 반환
         firebaseService.insertMessage(Message.builder()
@@ -45,8 +49,8 @@ public class FCMController {
     }
 
     //Service테스트용
-    @GetMapping("/test")
-    public void test(){
-        firebaseService.getEvent("123456789");
+    @GetMapping("/start")
+    public void scheduleStart(){
+            checkEvent.checkEvent();
     }
 }

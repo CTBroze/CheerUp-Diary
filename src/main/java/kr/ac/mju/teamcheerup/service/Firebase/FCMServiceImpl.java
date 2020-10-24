@@ -6,6 +6,7 @@ import kr.ac.mju.teamcheerup.modle.FCMMessage;
 import kr.ac.mju.teamcheerup.modle.Message;
 import lombok.RequiredArgsConstructor;
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class FCMServiceImpl implements FCMService{
     private final ObjectMapper objectMapper;
     private final FirebaseInitialize firebaseInitialize;
 
+    @Autowired
+    private final FirebaseService firebaseService;
+
     /*
         FirebaseMessage객체를 통한 전송이 아닌 HttpRequset를 보내는 형식으로 전달
         private메서드인 makeMessage를 이용한 메시지 제작
@@ -30,7 +34,7 @@ public class FCMServiceImpl implements FCMService{
     @Override
     public void sendMessageTo(String targetToken, Message msg) throws IOException {
         //FCM에서 사용하기 알맞은 JSON String형태로 만들어 저장
-        String message = makeMessage(targetToken, msg);
+        String message = makeMessage(firebaseService.getFCMToken(targetToken), msg);
 
         //HTTP 통신을 위한 객체
         OkHttpClient client = new OkHttpClient();
@@ -40,7 +44,7 @@ public class FCMServiceImpl implements FCMService{
         Request request = new Request.Builder()
                 .url(API_URL)
                 .post(requestBody)
-                .addHeader(HttpHeaders.AUTHORIZATION, "Bearer" + firebaseInitialize.getAccessToken())
+                .addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + firebaseInitialize.getAccessToken())
                 .addHeader(HttpHeaders.CONTENT_TYPE, "application/json; UTF-8")
                 .build();
         //Request를 보내고 결과를 response에 저장
