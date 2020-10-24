@@ -170,7 +170,7 @@ public class DateActivity extends AppCompatActivity {
         result.description = this.desc.getText().toString();
         result.scheduleType=type;
         result.date = year + "-" + month + "-" + day;
-        result.time = Integer.toString(hour) + "-" + Integer.toString(min);
+        result.time = Integer.toString(hour) + ":" + Integer.toString(min);
 
         return result;
     }
