@@ -2,7 +2,7 @@
 <resources>
     <string-array name="kind">
         <item>시험</item>
-        <item>면접</item>
+        <item>생일</item>
         <item>대회</item>
         <item>기타</item>
     </string-array>

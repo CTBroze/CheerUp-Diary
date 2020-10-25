@@ -3,7 +3,6 @@ package activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
@@ -17,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.ap.cheerupdiary.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,18 +26,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.internal.InternalTokenProvider;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.json.JSONException;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import data.ScheduleData;
-import fragment.CalendarFragment;
 import fragment.DatePickerFragment;
 
 

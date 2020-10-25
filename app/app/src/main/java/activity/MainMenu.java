@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -31,8 +30,6 @@ public class MainMenu extends AppCompatActivity {
     }
 
     // 액션바 메뉴 클릭시 이벤트 처리
-
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -118,10 +115,10 @@ public class MainMenu extends AppCompatActivity {
 //                        onResume();
 //                        return true;
 //                    }
-////                    case R.id.tab2: {
-////                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, scheduleListFrag).commitAllowingStateLoss();
-////                        return true;
-////                    }
+//                    case R.id.tab2: {
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, scheduleListFrag).commitAllowingStateLoss();
+//                        return true;
+//                    }
 //                    case R.id.tab3: {
 //                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, settingFrag).commitAllowingStateLoss();
 //                        onResume();
