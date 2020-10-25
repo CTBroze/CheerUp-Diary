@@ -15,7 +15,7 @@ import java.util.*;
 @Service
 public class FirebaseServiceImpl implements FirebaseService{
     //총 메시지 개수
-    private int messageCount = 1;
+    private int messageCount = 6;
     final String BASE_URL = "https://cheerupdiary.firebaseio.com/";
 
     @Override
@@ -24,8 +24,19 @@ public class FirebaseServiceImpl implements FirebaseService{
         Random random = new Random();
         //이벤트 종류에 따라 메시지를 가져오도록 변경 예정(현재 메시지개수 부족)
         try {
+            //시험 0, 생일 1, 대회 2, 기타 3
+            switch(event){
+                case 0:
+                    break;
+                case 1:
+                case 2:
+                    event += 2;
+                    break;
+                default:
+                    return null;
+            }
             //Firebase접근을 위한 객체(Firebase4j 이용)
-            Firebase firebase = new Firebase(BASE_URL +"Message/Message"+(random.nextInt(messageCount+1)));
+            Firebase firebase = new Firebase(BASE_URL +"Message/Message"+(random.nextInt(1) + event));
             //주소에 해당하는 데이터값을 가져온다
             FirebaseResponse response = firebase.get();
             //성공적으로 통신했을경우
@@ -72,7 +83,7 @@ public class FirebaseServiceImpl implements FirebaseService{
                 String[] temp = (response.getBody().toString()).replace("{","").replace("}","").split(",");
                 //Array에 저장
                 events.add(Event.builder()
-                        .event((temp[2].split("="))[1])
+                        .event(Integer.parseInt((temp[2].split("="))[1]))
                         //LocalDateTime.of와 Integer.parseInt를 통해 String > int > LocalDateTime으로 변환하여 저장
                         .dateTime(LocalDateTime.of(Integer.parseInt(((temp[0].split("="))[1]).split("-")[0]), //year
                                 Integer.parseInt(((temp[0].split("="))[1]).split("-")[1]), //month

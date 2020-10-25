@@ -36,7 +36,7 @@ public class CheckEvent {
                                 if (event.getDateTime().getHour() == now.getHour()) {
                                     if (event.getDateTime().getMinute() == now.getMinute()) {
                                         //호출(바로 호출) 가능하면 HTTP Requset로 수정(localhost:8080/send/{userToken}/{eventCode})
-                                        fcmService.sendMessageTo(user, firebaseService.getMesseage(eventClassification(event)));
+                                        fcmService.sendMessageTo(user, firebaseService.getMesseage(event.getEvent()));
                                     }
                                 }
                             }
@@ -48,13 +48,5 @@ public class CheckEvent {
         catch (IOException e){
             e.printStackTrace();
         }
-    }
-
-    private int eventClassification(Event event){
-        //이벤트 분류
-        if(event.getEvent().equals("생일")) return 1;
-        if(event.getEvent().equals("시험")) return 2;
-        //분류되지 않은 이벤트
-        return 0;
     }
 }

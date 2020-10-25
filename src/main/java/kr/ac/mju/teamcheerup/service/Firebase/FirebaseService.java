@@ -19,5 +19,5 @@ public interface FirebaseService {
     void insertMessage(Message msg);
 
     //FCM토큰값 반환
-    public String getFCMToken(String token);
+    String getFCMToken(String token);
 }

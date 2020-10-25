@@ -33,6 +33,11 @@ public class FCMServiceImpl implements FCMService{
      */
     @Override
     public void sendMessageTo(String targetToken, Message msg) throws IOException {
+        //null 메시지면 반환(지정 이벤트가 아님)
+        if(msg == null){
+            return;
+        }
+
         //FCM에서 사용하기 알맞은 JSON String형태로 만들어 저장
         String message = makeMessage(firebaseService.getFCMToken(targetToken), msg);
 

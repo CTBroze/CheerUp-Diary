@@ -12,6 +12,6 @@ import java.time.LocalDateTime;
 public class Event {
     private String title;
     private String data;
-    private String event;
+    private int event;
     private LocalDateTime dateTime;
 }

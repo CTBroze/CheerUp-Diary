@@ -48,9 +48,23 @@ public class FCMController {
                 .build());
     }
 
-    //Service테스트용
+    //Service시작용
     @GetMapping("/start")
     public void scheduleStart(){
             checkEvent.checkEvent();
+    }
+
+    //ServiceTest
+    @GetMapping("/test")
+    public void test(){
+        try {
+            fcmService.sendMessageTo("OuQHCXo2ELbkrUwMzWfj9lmCHUm2", firebaseService.getMesseage(0));
+            fcmService.sendMessageTo("OuQHCXo2ELbkrUwMzWfj9lmCHUm2", firebaseService.getMesseage(1));
+            fcmService.sendMessageTo("OuQHCXo2ELbkrUwMzWfj9lmCHUm2", firebaseService.getMesseage(2));
+            fcmService.sendMessageTo("OuQHCXo2ELbkrUwMzWfj9lmCHUm2", firebaseService.getMesseage(3));
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }
