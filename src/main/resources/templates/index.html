@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheerUp!Diary</title>
+    <style>
+        #men{
+            display: block;
+            width: 1407px;
+            height: 73px;
+            margin: 10px;
+            background: #C4C4C4;
+        }
+
+        #calendar{
+            display: inline-block;
+            width: 949px;
+            height: 888px;
+            margin: 10px;
+            background: #C4C4C4;
+        }
+
+        #event{
+            display: inline-block;
+            width: 438px;
+            height: 888px;
+            margin: 10px;
+            background:green;
+        }
+        #block{
+            display: block;
+        }
+    </style>
+    <style type="text/css" href="/css/calendar"></style>
+    <script type="text/javascript" src="js/calendar.js"></script>
+</head>
+<body>
+    <div>
+        <div id="men">메뉴바</div>
+        <div id="block">
+            <div id="calendar">
+            </div>
+            <div id="event">일정목록</div>
+        </div>
+    </div>
+</body>
+</html>

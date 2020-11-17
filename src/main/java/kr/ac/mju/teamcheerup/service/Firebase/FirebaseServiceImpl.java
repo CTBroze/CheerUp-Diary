@@ -85,7 +85,7 @@ public class FirebaseServiceImpl implements FirebaseService{
                 events.add(Event.builder()
                         .event(Integer.parseInt((temp[2].split("="))[1]))
                         //LocalDateTime.of와 Integer.parseInt를 통해 String > int > LocalDateTime으로 변환하여 저장
-                        .dateTime(LocalDateTime.of(Integer.parseInt(((temp[0].split("="))[1]).split("-")[0]), //year
+                        .dateTime(LocalDateTime.of(Integer.parseInt(((temp[0].split("="))[ 1]).split("-")[0]), //year
                                 Integer.parseInt(((temp[0].split("="))[1]).split("-")[1]), //month
                                 Integer.parseInt(((temp[0].split("="))[1]).split("-")[2]), //day
                                 Integer.parseInt(((temp[3].split("="))[1]).split(":")[0]), //hour
