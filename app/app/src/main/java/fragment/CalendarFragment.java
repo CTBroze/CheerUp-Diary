@@ -1,6 +1,8 @@
 package fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,7 +35,9 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
@@ -80,7 +84,7 @@ public class CalendarFragment extends Fragment {
         calendar.addDecorator(new SundayDecorator());
         calendar.addDecorator(new SaturdayDecorator());
         calendar.addDecorator(new OneDateDecorator());
-
+        calendar.addDecorator(new EventDecorator(Color.RED));
         onDateChangeListener dayListen = new onDateChangeListener();
         calendar.setOnDateChangedListener(dayListen);
 
@@ -112,6 +116,7 @@ public class CalendarFragment extends Fragment {
         return v;
         //return inflater.inflate(R.layout.fragment_calendar, container, false);
     }
+
 
     // 일정 목록 보기위한 listener
     class ShowButtonListener implements View.OnClickListener{

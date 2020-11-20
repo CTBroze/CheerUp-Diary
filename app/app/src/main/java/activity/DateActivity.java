@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.ap.cheerupdiary.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -90,6 +91,9 @@ public class DateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final Map<String, ScheduleData> m = new HashMap<>();
 
+                if(!Check()){
+                    return;
+                }
                 //FCM Token Init
                 FirebaseMessaging.getInstance().getToken()
                         .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -148,6 +152,16 @@ public class DateActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // 올바른입력값들인지 체크
+    boolean Check(){
+        if(day == null || year == null || month == null ){
+            Toast.makeText(getApplicationContext(), "날짜와 시간을 선택해주세요",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+       return true;
     }
 
     void fin(){

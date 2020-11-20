@@ -1,10 +1,9 @@
 package fragment;
 
+import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;

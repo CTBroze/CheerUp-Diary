@@ -14,6 +14,8 @@ import fragment.CalendarFragment;
 import fragment.ScheduleListFragment;
 import fragment.SettingFragment;
 
+import androidx.fragment.app.Fragment;
+
 public class MainMenu extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
