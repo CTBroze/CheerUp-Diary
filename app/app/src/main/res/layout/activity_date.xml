@@ -82,6 +82,28 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="미리 알림"
+                android:textSize="30dp"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/alreadySpinner"
+                android:spinnerMode="dropdown"
+                android:entries="@array/kind"
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <Button

@@ -53,11 +53,15 @@ public class DateActivity extends AppCompatActivity {
     EditText title;
     EditText desc;
     int type;
+    int alreadytype;
 
     int manyOfData;
 
     // 일정 종류
     Spinner kind;
+    // 미리알림 종류
+    Spinner already;
+
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Event/" + auth.getUid());
@@ -171,10 +175,11 @@ public class DateActivity extends AppCompatActivity {
     }
 
     ScheduleData getData(){
-        ScheduleData result = new ScheduleData("","","",1,"");
+        ScheduleData result = new ScheduleData("","","",1,"", 1);
         result.title = this.title.getText().toString();
         result.description = this.desc.getText().toString();
         result.scheduleType=type;
+        result.alreadyType=alreadytype;
         result.date = year + "-" + month + "-" + day;
         result.time = Integer.toString(hour) + ":" + Integer.toString(min);
 
@@ -220,18 +225,41 @@ public class DateActivity extends AppCompatActivity {
         this.type=pos;
     }
 
+    void setAlready(int pos){
+        this.alreadytype=pos;
+    }
+
     void SettingSpinner(){
         kind = findViewById(R.id.kindSpinner);
         kind.setPrompt("일정을 선택하세요");
+
+        already = findViewById(R.id.alreadySpinner);
+        already.setPrompt("미리알림을 선택하세요");
 
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.kind, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         kind.setAdapter(adapter);
 
+        ArrayAdapter alreadyAdapter = ArrayAdapter.createFromResource(this, R.array.already, android.R.layout.simple_spinner_dropdown_item);
+        alreadyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        already.setAdapter(alreadyAdapter);
+
         kind.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 setType(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        already.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                setAlready(position);
             }
 
             @Override

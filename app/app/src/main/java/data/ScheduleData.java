@@ -13,13 +13,15 @@ public class ScheduleData {
     public String description;
     public String time;
     public int scheduleType;
+    public int alreadyType;
 
-    public ScheduleData(String title, String desc, String date, int type, String time){
+    public ScheduleData(String title, String desc, String date, int type, String time, int already){
         this.title = title;
         this.description = desc;
         this.date = date;
         this.scheduleType = type;
         this.time = time;
+        this.alreadyType = already;
     }
 
 
