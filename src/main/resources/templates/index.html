@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CheerUp!Diary</title>
+    <link rel="stylesheet" type="text/css" href="/css/calendar.css">
     <style>
         html{
             margin: 0;
@@ -16,26 +17,17 @@
             background: lightblue;
             border-radius: 10px;
         }
-
         #calendar{
-            width: 65%;
+            width: 60%;
             height: 700px;
             margin: 1%;
-            border-collapse: collapse;
         }
-
         #event{
             width: 30%;
             height: 700px;
             margin: 1%;
             background:green;
-            border-collapse: collapse;
         }
-
-        #content{
-            height: 1000px;
-        }
-
         .block{
             display: block;
         }
@@ -46,57 +38,13 @@
 
         .inline_block{
             display: inline-block;
+            float: left;
         }
 
         ul{
             list-style: none;
         }
-        table{
-            width: 100%;
-            height: 100%;
-            border-collapse: collapse;
-            border-spacing: 0;
-        }
-        thead{
-            display: block;
-            width: 100%;
-            height: 20%;
-            border-spacing: 0;
-        }
-        tbody{
-            display: block;
-            height: 80%;
-        }
-        tr{
-            display: block;
-            width: 100%;
-            height: 20%;
-        }
-        td{
-            display: inline-block;
-            text-align: center;
-            font-size: 20px;
-            border: 1px solid black;
-            width: 14%;
-            height: 100%;
-        }
-        #prev_btn{
-            width: 14%;
-        }
-        #next_btn{
-            width: 14%;
-        }
-        #tbCalendarYM{
-            width: 70%;
-        }
-        .sun{
-            color: red;
-        }
-        .sat{
-            color: blue;
-        }
     </style>
-    <style type="text/css" href="/css/calendar"></style>
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
@@ -121,30 +69,19 @@
                 <table id="calTable">
                     <thead id="calHead">
                     <tr id="cal_menu">
-                        <td id="prev_btn"><label onclick="prevCalendar()"><</label></td>
-                        <td id="tbCalendarYM" colspan="5">
-                            yyyy년 m월</td>
-                        <td id="next_btn"><label onclick="nextCalendar()">></label></td>
+                        <td id="prev_btn"><label onclick="prevCalendar()"><</label></td><td id="tbCalendarYM" colspan="5">yyyy년 m월</td><td id="next_btn"><label onclick="nextCalendar()">></label></td>
                     </tr>
                     <tr>
-                        <td class="sun">일</td>
-                        <td>월</td>
-                        <td>화</td>
-                        <td>수</td>
-                        <td>목</td>
-                        <td>금</td>
-                        <td class="sat">토</td>
+                        <td class="sun">일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td class="sat">토</td>
                     </tr>
                     </thead>
                     <tbody id="calBody">
-
                     </tbody>
                 </table>
             </div>
             <div id="event" class="inline_block">
-                <h3>일정목록</h3>
-                <ul>
-                    <li>test</li>
+                <h3>등록된 일정목록</h3>
+                <ul id="eventList">
                 </ul>
             </div>
         </div>
@@ -160,6 +97,7 @@
     <!-- Firebase Custom -->
     <script type="text/javascript" src="js/firebase.js"></script>
     <script type="text/javascript" src="js/login.js"></script>
+    <script type="text/javascript" src="js/database.js"></script>
 
     <!-- Custom Script -->
     <script type="text/javascript" src="js/calendar.js"></script>

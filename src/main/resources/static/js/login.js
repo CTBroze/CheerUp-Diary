@@ -5,6 +5,7 @@ $('#btn_google_login').click(function () {
         firebase.auth().signInWithPopup(provider).then(function (result) {
             $('#auth_state').text(result.user.displayName);
             $('#btn_google_login').html('로그아웃');
+            getList();
         }).catch(function (error) {
             alert(error.message);
         });

@@ -18,7 +18,7 @@ function buildCalendar() {
     var tbCalendarYM = document.getElementById("tbCalendarYM");
     tbCalendarYM.innerHTML = today.getFullYear() + "년 " + (today.getMonth() + 1) + "월";
 
-    while (tbCalendar.rows.length > 2) {
+    while (tbCalendar.rows.length > 0) {
         tbCalendar.deleteRow(tbCalendar.rows.length - 1);
     }
     var row = null;
