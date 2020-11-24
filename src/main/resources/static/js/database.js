@@ -26,6 +26,7 @@ function getList(){
         let data = snapshot.val();
         console.log(data);
         var html;
+        clearList();
         for(let i = 1;i<=data.manyofdata;i++){
             let subData = snapshot.child(i).val();
             console.log(subData);
@@ -37,6 +38,10 @@ function getList(){
             $('#eventList').append(html);
         }
     });
+}
+
+function clearList(){
+    $('#eventList').html("");
 }
 
 function onAddEvent(data){

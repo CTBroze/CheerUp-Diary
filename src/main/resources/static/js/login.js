@@ -14,6 +14,7 @@ $('#btn_google_login').click(function () {
             alert("로그아웃되었습니다");
             $('#auth_state').text('[로그인되지 않음]');
             $('#btn_google_login').html('로그인');
+            clearList();
         }).catch(function (error){
             alert(error.message);
         });
