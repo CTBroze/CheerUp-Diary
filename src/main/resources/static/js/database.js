@@ -34,7 +34,7 @@ function getList(){
             let title = subData.data.title;
             let date = subData.data.date;
             let time = subData.data.time;
-            html = "<li id='" + key + "' onclick='modif(" + key +")'>" + title + " " + date + " " + time + "</li>";
+            html = "<li id='" + key + "' onclick='modif(" + key +")'>일정명 : " + title + " 일자 : " + date + " 시간 : " + time + "</li>";
             $('#eventList').append(html);
         }
     });
