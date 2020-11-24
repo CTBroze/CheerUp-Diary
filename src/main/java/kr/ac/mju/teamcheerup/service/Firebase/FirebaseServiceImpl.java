@@ -82,19 +82,21 @@ public class FirebaseServiceImpl implements FirebaseService{
                 //데이터 삽입과정
                 String[] temp = (response.getBody().toString()).replace("{","").replace("}","").split(",");
                 //Array에 저장
-                events.add(Event.builder()
-                        .event(Integer.parseInt((temp[2].split("="))[1]))
+                Event tempEvent = Event.builder()
+                        .event(Integer.parseInt((temp[3].split("="))[1]))
                         //LocalDateTime.of와 Integer.parseInt를 통해 String > int > LocalDateTime으로 변환하여 저장
-                        .dateTime(LocalDateTime.of(Integer.parseInt(((temp[0].split("="))[ 1]).split("-")[0]), //year
-                                Integer.parseInt(((temp[0].split("="))[1]).split("-")[1]), //month
-                                Integer.parseInt(((temp[0].split("="))[1]).split("-")[2]), //day
-                                Integer.parseInt(((temp[3].split("="))[1]).split(":")[0]), //hour
-                                Integer.parseInt(((temp[3].split("="))[1]).split(":")[1]), //min
+                        .dateTime(LocalDateTime.of(Integer.parseInt(((temp[1].split("="))[ 1]).split("-")[0]), //year
+                                Integer.parseInt(((temp[1].split("="))[1]).split("-")[1]), //month
+                                Integer.parseInt(((temp[1].split("="))[1]).split("-")[2]), //day
+                                Integer.parseInt(((temp[4].split("="))[1]).split(":")[0]), //hour
+                                Integer.parseInt(((temp[4].split("="))[1]).split(":")[1]), //min
                                 0, //sec
                                 0)) //nanosec
-                        .data((temp[1].split("="))[1])
-                        .title((temp[4].split("="))[1])
-                        .build());
+                        .data((temp[2].split("="))[1])
+                        .title((temp[5].split("="))[1])
+                        .build();
+                tempEvent.setDateTime(tempEvent.getDateTime().minusHours(earlyAl(Integer.parseInt((temp[0].split("="))[1]))));
+                events.add(tempEvent);
                 index++;
                 response = firebase.get(index+"/data/");
             }
@@ -111,6 +113,20 @@ public class FirebaseServiceImpl implements FirebaseService{
         }
 
         return events;
+    }
+
+    private Long earlyAl(int data){
+        switch (data){
+            case 0:
+                return (long)0;
+            case 1:
+                return (long)1;
+            case 2:
+                return (long)8;
+            case 3:
+                return (long)24;
+        }
+        return (long)0;
     }
 
     @Override

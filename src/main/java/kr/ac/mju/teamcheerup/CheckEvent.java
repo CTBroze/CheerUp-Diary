@@ -20,7 +20,7 @@ public class CheckEvent {
     FCMService fcmService;
 
     //1분에 한번씩 검색한다.(60000ms / 1000 = 60s)
-    @Scheduled(fixedRate = 6000)
+    @Scheduled(fixedRate = 60000)
     public void checkEvent(){
         LocalDateTime now = LocalDateTime.now();
         //유저목록 가져오기

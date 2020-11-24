@@ -8,9 +8,7 @@ function adder_fn(){
         $('#eventDate').val("");
         $('#eventTime').val("");
         $('#eventDes').val("");
-        $('#del').attr('class','notShow');
-        $('#eventSelect').val("");
-        $('#key').attr('value',0);
+        $('#earlySelect').val("");
     } else { //입력폼이 보이지 않는 경우
         $('#eventAdder').attr('class','show');
         $('#del').attr('class','notShow');
@@ -19,14 +17,16 @@ function adder_fn(){
 }
 
 function set_event(){
-    //신규 등록인 경우
     let check = $('#key').attr('value');
+    //신규 등록인 경우
     if(Number(check) == 0){
+        console.log("new");
         let title = $('#eventTitle').val();
         let date = $('#eventDate').val();
         let time = $('#eventTime').val();
         let des = $('#eventDes').val();
         let type = $('#eventSelect').val();
+        let early = $('#earlySelect').val();
         //예외처리
         if(title === "" || date === "" || time === "" || type == ""){
             alert("모든 데이터를 입력해주세요");
@@ -37,7 +37,8 @@ function set_event(){
             date: date,
             time: time,
             description: des,
-            scheduleType: type
+            scheduleType: type,
+            alreadyType: early
         };
         console.log(addData);
         let key;
@@ -61,11 +62,13 @@ function set_event(){
         });
 
     } else { //수정인 경우
+        console.log("edit");
         let title = $('#eventTitle').val();
         let date = $('#eventDate').val();
         let time = $('#eventTime').val();
         let des = $('#eventDes').val();
         let type = $('#eventSelect').val();
+        let early = $('#earlySelect').val();
         //예외처리
         if(title === "" || date === "" || time === "" || type == ""){
             alert("모든 데이터를 입력해주세요");
@@ -76,14 +79,14 @@ function set_event(){
             date: date,
             time: time,
             description: des,
-            scheduleType: type
+            scheduleType: type,
+            alreadyType: early
         };
         console.log(addData);
         database.once('value').then(function (snapshot) {
             data = snapshot.val();
             key = $('#key').attr('value');
             database.child(key+"/data").set(addData);
-            database.child('manyofdata').set(key);
         }).then(function (){
             $('#del').attr('class','notShow');
             $('#key').val("");
@@ -101,18 +104,22 @@ function set_event(){
 }
 
 function del_event(){
-    let key = $('#key').attr('value');
+    let key = Number($('#key').attr('value'));
     let data;
     database.once('value').then(function (snapshot){
         database.child(key).set(null);
         data = snapshot.val();
         let subData;
-        for(let i=key;i<data.manyofdata;i++){
-            subData = snapshot.child(key+1 + '/data').val();
-            database.child(key+'/data').set(subData);
+        for(let i=Number(key);i<Number(data.manyofdata);i++){
+            console.log(i+"차");
+            subData = snapshot.child(Number(i)+1 + '/data').val();
+            console.log(subData);
+            database.child(i+'/data').set(subData);
+            console.log(snapshot.child(i).val());
         }
-        key -= 1;
-        database.child('manyofdata').set(key);
+        database.child(data.manyofdata).set(null);
+        let size = Number(data.manyofdata) - 1;
+        database.child('manyofdata').set(size);
         $('#del').attr('class','notShow');
         $('#key').val("");
         $('#eventTitle').val("");
@@ -136,6 +143,7 @@ function modif(key){
         $('#eventTime').val(data.time);
         $('#eventDes').val(data.description);
         $('#eventSelect').val(data.scheduleType);
+        $('#earlySelect').val(data.alreadyType);
         $('#eventAdder').attr('class',"show");
     });
 }
