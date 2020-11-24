@@ -30,11 +30,11 @@ function getList(){
         for(let i = 1;i<=data.manyofdata;i++){
             let subData = snapshot.child(i).val();
             console.log(subData);
-            let key = i+'event';
+            let key = i;
             let title = subData.data.title;
             let date = subData.data.date;
             let time = subData.data.time;
-            html = "<li id='" + key + "' onclick=''>" + title + " " + date + " " + time + "</li>";
+            html = "<li id='" + key + "' onclick='modif(" + key +")'>" + title + " " + date + " " + time + "</li>";
             $('#eventList').append(html);
         }
     });
@@ -42,20 +42,4 @@ function getList(){
 
 function clearList(){
     $('#eventList').html("");
-}
-
-function onAddEvent(data){
-    let key= data.key;
-    let eventData = data.val();
-    let title = eventData.title;
-    let date = eventData.date; // 메모 내용의 첫 줄을 제목으로 보여줌
-    let time = eventData.time;
-}
-
-function onModEvent(data){
-    let key= data.key;
-    let eventData = data.val();
-    let title = eventData.title;
-    let date = eventData.date; // 메모 내용의 첫 줄을 제목으로 보여줌
-    let time = eventData.time;
 }

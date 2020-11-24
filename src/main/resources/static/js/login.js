@@ -5,6 +5,7 @@ $('#btn_google_login').click(function () {
         firebase.auth().signInWithPopup(provider).then(function (result) {
             $('#auth_state').text(result.user.displayName);
             $('#btn_google_login').html('로그아웃');
+            $('#adder').attr("class",'show');
             getList();
         }).catch(function (error) {
             alert(error.message);
@@ -14,6 +15,7 @@ $('#btn_google_login').click(function () {
             alert("로그아웃되었습니다");
             $('#auth_state').text('[로그인되지 않음]');
             $('#btn_google_login').html('로그인');
+            $('#adder').attr("class",'notShow');
             clearList();
         }).catch(function (error){
             alert(error.message);

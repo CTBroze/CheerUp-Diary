@@ -41,6 +41,14 @@
             float: left;
         }
 
+        .show{
+            visibility: visible;
+        }
+
+        .notShow{
+            display: none;
+        }
+
         ul{
             list-style: none;
         }
@@ -80,7 +88,35 @@
                 </table>
             </div>
             <div id="event" class="inline_block">
-                <h3>등록된 일정목록</h3>
+                <div id="eventAdder" class="notShow">
+                    <form>
+                        <div id="key" class="notShow"></div>
+                        <div class="form-group">
+                            <label>일정명</label>
+                            <input id="eventTitle" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <lable>일자</lable><br>
+                            <input id="eventDate" type="date">
+                            <input id="eventTime" type="time">
+                        </div>
+                        <div class="form-group">
+                            <label>일정정보</label>
+                            <select class="form-control" id="eventSelect">
+                                <option value="1">생일</option>
+                                <option value="2">시험</option>
+                                <option value="3">면접</option>
+                                <option value="4">기타</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>일정정보</label>
+                            <textarea class="form-control" id="eventDes"></textarea>
+                        </div>
+                        <button type="button" id="submit" onclick="set_event()">확인</button>
+                    </form>
+                </div>
+                <h3>일정목록</h3><button id="adder" onclick="adder_fn()" class="notShow">일정추가</button>
                 <ul id="eventList">
                 </ul>
             </div>
@@ -101,6 +137,7 @@
 
     <!-- Custom Script -->
     <script type="text/javascript" src="js/calendar.js"></script>
+    <script type="text/javascript" src="js/editor.js"></script>
     <script>
         buildCalendar();
     </script>
