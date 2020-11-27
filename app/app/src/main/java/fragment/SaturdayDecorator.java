@@ -13,6 +13,8 @@ public class SaturdayDecorator implements DayViewDecorator {
 
     private final Calendar calendar = Calendar.getInstance();
 
+
+
     public SaturdayDecorator(){
 
     }

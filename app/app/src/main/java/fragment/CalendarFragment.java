@@ -38,7 +38,9 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.security.auth.callback.Callback;
@@ -59,12 +61,14 @@ public class CalendarFragment extends Fragment {
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     final FirebaseAuth auth = FirebaseAuth.getInstance();
     DatabaseReference myRef = database.getReference("Event/"+auth.getUid());
+
     valueEventListener val = new valueEventListener();
     int manyofdate;
 
 
     // 나중에 일정클릭시 schedule list 들만 가져와서 string 형으로 저장
     String scheduleLStringList[] = {""};
+
     Vector<String> vector = new Vector<String>();
 
     String selectday = new String("");
@@ -84,7 +88,8 @@ public class CalendarFragment extends Fragment {
         calendar.addDecorator(new SundayDecorator());
         calendar.addDecorator(new SaturdayDecorator());
         calendar.addDecorator(new OneDateDecorator());
-        calendar.addDecorator(new EventDecorator(Color.RED));
+        //calendar.addDecorator(new EventDecorator());
+
         onDateChangeListener dayListen = new onDateChangeListener();
         calendar.setOnDateChangedListener(dayListen);
 
@@ -202,6 +207,11 @@ public class CalendarFragment extends Fragment {
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if(snapshot.getValue() != null){
                 manyofdate = Integer.parseInt(snapshot.getValue().toString());
+                // 이벤트 데코레이터 그리는 부분
+                for(int i = 1; i <= manyofdate; i++){
+                    EventDecoratorListener ev = new EventDecoratorListener();
+                    myRef.child(Integer.toString(i)).child("data/date").addValueEventListener(ev);
+                }
             }
         }
 
@@ -211,4 +221,17 @@ public class CalendarFragment extends Fragment {
         }
     }
 
+    // 이벤트 데코레이터 추가하는 부분
+    class EventDecoratorListener implements ValueEventListener{
+
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            calendar.addDecorator(new EventDecorator(snapshot.getValue().toString()));
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    }
 }
