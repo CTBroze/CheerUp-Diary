@@ -49,7 +49,7 @@ public class FirebaseServiceImpl implements FirebaseService{
                  */
                 String[] temp = (response.getBody().toString()).replace("{","").replace("}","").split(",");
                 msg = Message.builder()
-                        .notification(Message.Notification.builder()
+                        .data(Message.Notification.builder()
                                 .title((temp[2].split("=")[1]))
                                 .image((temp[1].split("=")[1]))
                                 .body((temp[0].split("=")[1]))
@@ -159,9 +159,9 @@ public class FirebaseServiceImpl implements FirebaseService{
         try {
             Firebase firebase = new Firebase(BASE_URL + "Message/Message"+messageCount);
             HashMap<String, Object> dataMap = new LinkedHashMap<String, Object>();
-            dataMap.put("제목",msg.getNotification().getTitle());
-            dataMap.put("내용",msg.getNotification().getBody());
-            dataMap.put("이미지",msg.getNotification().getImage());
+            dataMap.put("제목",msg.getData().getTitle());
+            dataMap.put("내용",msg.getData().getBody());
+            dataMap.put("이미지",msg.getData().getImage());
             FirebaseResponse response = firebase.put(dataMap);
             messageCount++;
         }

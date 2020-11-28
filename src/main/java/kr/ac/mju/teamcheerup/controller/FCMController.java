@@ -40,7 +40,7 @@ public class FCMController {
         //경로를 통해 받아온 제목과 내용을 Message로 변환하여 반환
         firebaseService.insertMessage(Message.builder()
                 .token(null)
-                .notification(Message.Notification.builder()
+                .data(Message.Notification.builder()
                         .title(title)
                         .body(data)
                         .image(null)

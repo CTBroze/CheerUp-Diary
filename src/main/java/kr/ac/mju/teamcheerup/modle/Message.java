@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class Message{
-    private Notification notification;
+    private Notification data;
     private String token;
 
     @Builder
