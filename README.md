@@ -3,10 +3,10 @@
 
 
 팀원  
-  김건희  
-  김민석  
-  도연재  
-  이유정  
+  김건희 : https://github.com/Hamji  
+  김민석 : https://github.com/CTBroze
+  도연재 : https://github.com/yeonjae-do  
+  이유정 : https://github.com/lyj0047  
 
 
 구성
