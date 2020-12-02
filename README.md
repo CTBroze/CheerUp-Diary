@@ -8,8 +8,13 @@
   도연재 : https://github.com/yeonjae-do  
   이유정 : https://github.com/lyj0047  
 
+개발파트  
+  김건희 : AndroidApp, DB  
+  김민석 : PushServer, Web  
+  도연재 : PushServer, AndroidApp  
+  이유정 : AndroidApp, Web  
 
-구성
+구성  
   FCMPushServer(Backend Branch), Webpage(Backend Brandch), AndroidApp(Master)  
 
 
