@@ -18,7 +18,7 @@
   FCMPushServer(Backend Branch), Webpage(Backend Brandch), AndroidApp(Master)  
 
 
-주요기능
+주요기능  
   FCMPushServer : FCM발송, FirebaseRTD조회  
   Webpage : 일정관리(CRUD), 달력  
   AndroidApp : 일정관리(CR), 달력  
@@ -30,3 +30,6 @@
   Bootstrap - https://getbootstrap.com/docs/4.5/getting-started/introduction/  
   MeterialCalendarView – https://github.com/prolificinteractive/material-calendarview  
   OkHttp – https://github.com/square/okhttp  
+
+
+FirebaseAPIKey제거를 위한 Branch재생성 및 재업로드하였습니다
