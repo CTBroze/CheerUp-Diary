@@ -1,0 +1,38 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+group = 'kr.ac.mju'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter' //SpringFramework
+	implementation 'org.springframework.boot:spring-boot-starter-web' //Springboot Web(http통신 및 json)
+	compileOnly 'org.projectlombok:lombok' //lombok
+	annotationProcessor 'org.projectlombok:lombok' //lombok
+	implementation 'com.google.firebase:firebase-admin:6.8.1' //firebase
+	implementation 'com.github.bane73:firebase4j:eb408c11a6' //firebase
+	implementation("com.squareup.okhttp3:okhttp:4.9.0")
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
